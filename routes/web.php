@@ -17,3 +17,19 @@ Route::get('/register', function () {
 Route::get('/reservasi', function () {
     return view('reservasi_page');
 });
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.admin_page');
+});
+
+Route::get('/admin/manajemen-kamar', function () {
+    return view('admin.manajemen_kamar');
+});
+
+Route::get('/admin/reservasi', function () {
+    return view('admin.reservasi');
+});
+
+Route::get('/admin/pelanggan', function () {
+    return view('admin.pelanggan');
+});
