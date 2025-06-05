@@ -1,3 +1,9 @@
+@php
+  //dd($data);
+  $i = 1;
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +105,6 @@
                   <option>Pending</option>
                   <option>Confirmed</option>
                   <option>Cancelled</option>
-                  <option>Completed</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <i class="fas fa-chevron-down"></i>
@@ -123,16 +128,16 @@
           <div class="p-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-lg font-semibold text-gray-800">Daftar Reservasi</h2>
             <div class="text-sm text-gray-500">
-              Menampilkan 1-10 dari 45 reservasi
+              Menampilkan {{ $reservasi->firstItem() }} sampai {{ $reservasi->lastItem() }} dari {{ $reservasi->total() }} reservasi
             </div>
           </div>
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Reservasi</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kamar</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tamu</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama/Type Kamar</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check-In/Out</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -140,206 +145,56 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
+                @foreach ( $reservasi as $data_reservasi) {{-- Ganti $reservasi dengan $data_reservasi atau nama lain agar tidak konflik dengan objek paginator --}}
                 <tr class="hover:bg-gray-50">
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">#RESV20230601</div>
-                    <div class="text-sm text-gray-500">01 Jun 2023</div>
+                    <div class="text-sm font-medium text-gray-900">{{ $i++ }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div>
-                        <div class="text-sm font-medium text-gray-900">Budi Santoso</div>
-                        <div class="text-sm text-gray-500">budi@example.com</div>
+                        <div class="text-sm font-medium text-gray-900">{{ $data_reservasi->tamu->nama }}</div>
+                        <div class="text-sm text-gray-500">{{ $data_reservasi->tamu->email }}</div>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Deluxe Room</div>
-                    <div class="text-sm text-gray-500">2 Kamar, 3 Malam</div>
+                    <div class="text-sm text-gray-900">{{ $data_reservasi->kamar->nama_kamar }}</div>
+                    <div class="text-sm text-gray-500">{{ $data_reservasi->kamar->tipe_kamar }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">15 Jun 2023</div>
-                    <div class="text-sm text-gray-500">18 Jun 2023</div>
+                    <div class="text-sm text-gray-900">{{ $data_reservasi->tanggal_checkin }}</div>
+                    <div class="text-sm text-gray-500">{{ $data_reservasi->tanggal_checkout }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Rp 3.600.000
+                    @php
+                    $checkinDate = new DateTime($data_reservasi->tanggal_checkin);
+                    $checkoutDate = new DateTime($data_reservasi->tanggal_checkout);
+        
+                    $interval = $checkinDate->diff($checkoutDate);
+                    $numberOfNights = $interval->days;
+        
+                    $totalHarga = $data_reservasi->kamar->harga_per_malam * $numberOfNights;
+                    $totalHarga = number_format($totalHarga, 0, ',', '.');
+                    @endphp
+        
+                    Rp. {{ $totalHarga }}
+        
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      Confirmed
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-900">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">#RESV20230602</div>
-                    <div class="text-sm text-gray-500">02 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Ani Wijaya</div>
-                        <div class="text-sm text-gray-500">ani@example.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Superior Room</div>
-                    <div class="text-sm text-gray-500">1 Kamar, 2 Malam</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">16 Jun 2023</div>
-                    <div class="text-sm text-gray-500">18 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Rp 1.200.000
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                      Pending
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-900">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">#RESV20230603</div>
-                    <div class="text-sm text-gray-500">03 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Citra Dewi</div>
-                        <div class="text-sm text-gray-500">citra@example.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Standard Room</div>
-                    <div class="text-sm text-gray-500">1 Kamar, 3 Malam</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">17 Jun 2023</div>
-                    <div class="text-sm text-gray-500">20 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Rp 900.000
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                    @if ($data_reservasi->status_reservasi == 'cancelled')
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                       Cancelled
                     </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-900">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">#RESV20230604</div>
-                    <div class="text-sm text-gray-500">04 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Dedi Kurniawan</div>
-                        <div class="text-sm text-gray-500">dedi@example.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Deluxe Room</div>
-                    <div class="text-sm text-gray-500">1 Kamar, 2 Malam</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">20 Jun 2023</div>
-                    <div class="text-sm text-gray-500">22 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Rp 2.400.000
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                      Paid
+                    @elseif ($data_reservasi->status_reservasi == 'pending')
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                      Pending
                     </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div class="flex space-x-2">
-                      <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="text-red-600 hover:text-red-900">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">#RESV20230605</div>
-                    <div class="text-sm text-gray-500">05 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Eka Putri</div>
-                        <div class="text-sm text-gray-500">eka@example.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">Superior Room</div>
-                    <div class="text-sm text-gray-500">2 Kamar, 4 Malam</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">25 Jun 2023</div>
-                    <div class="text-sm text-gray-500">29 Jun 2023</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Rp 4.800.000
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                    @else
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                       Confirmed
                     </span>
+                    @endif
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex space-x-2">
@@ -355,56 +210,28 @@
                     </div>
                   </td>
                 </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
           <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
             <div class="flex-1 flex justify-between sm:hidden">
-              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Previous
-              </a>
-              <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Next
-              </a>
+              {{ $reservasi->links('pagination::tailwind') }} {{-- Menggunakan Laravel built-in pagination links --}}
             </div>
             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div>
                 <p class="text-sm text-gray-700">
                   Menampilkan
-                  <span class="font-medium">1</span>
+                  <span class="font-medium">{{ $reservasi->firstItem() }}</span>
                   sampai
-                  <span class="font-medium">10</span>
+                  <span class="font-medium">{{ $reservasi->lastItem() }}</span>
                   dari
-                  <span class="font-medium">45</span>
+                  <span class="font-medium">{{ $reservasi->total() }}</span>
                   hasil
                 </p>
               </div>
-              <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Previous</span>
-                    <i class="fas fa-chevron-left"></i>
-                  </a>
-                  <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                    1
-                  </a>
-                  <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                    2
-                  </a>
-                  <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                    3
-                  </a>
-                  <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                    ...
-                  </span>
-                  <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                    8
-                  </a>
-                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Next</span>
-                    <i class="fas fa-chevron-right"></i>
-                  </a>
-                </nav>
+              <div class="pl-2">
+                {{ $reservasi->links('pagination::tailwind') }} {{-- Menggunakan Laravel built-in pagination links --}}
               </div>
             </div>
           </div>
@@ -424,22 +251,22 @@
                     </h3>
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                       <div class="sm:col-span-3">
-                        <label for="customer" class="block text-sm font-medium text-gray-700">Pelanggan</label>
+                        <label for="customer" class="block text-sm font-medium text-gray-700">Tamu</label>
                         <select id="customer" name="customer" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                          <option>Pilih Pelanggan</option>
-                          <option>Budi Santoso</option>
-                          <option>Ani Wijaya</option>
-                          <option>Citra Dewi</option>
+                          <option>Pilih Tamu</option>
+                          @foreach ($tamu as $dataTamu)
+                              <option value="{{ $dataTamu->id }}">{{ $dataTamu->nama }}</option>
+                          @endforeach
                         </select>
                       </div>
 
                       <div class="sm:col-span-3">
-                        <label for="room-type" class="block text-sm font-medium text-gray-700">Tipe Kamar</label>
+                        <label for="room-type" class="block text-sm font-medium text-gray-700">Pilih Kamar</label>
                         <select id="room-type" name="room-type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                          <option>Pilih Tipe Kamar</option>
-                          <option>Standard Room</option>
-                          <option>Superior Room</option>
-                          <option>Deluxe Room</option>
+                          <option>Pilih Kamar</option>
+                          @foreach ($kamar as $dataKamar)
+                          <option value="{{ $dataKamar->id }}">{{ $dataKamar->nama_kamar }}</option>
+                          @endforeach
                         </select>
                       </div>
 
@@ -453,17 +280,14 @@
                         <input type="date" name="check-out" id="check-out" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                       </div>
 
-                      <div class="sm:col-span-1">
-                        <label for="rooms" class="block text-sm font-medium text-gray-700">Jumlah Kamar</label>
-                        <input type="number" name="rooms" id="rooms" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="1" min="1">
-                      </div>
+                      
 
                       <div class="sm:col-span-3">
                         <label for="payment-method" class="block text-sm font-medium text-gray-700">Metode Pembayaran</label>
                         <select id="payment-method" name="payment-method" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                          <option>Transfer Bank</option>
-                          <option>Kartu Kredit</option>
-                          <option>Tunai</option>
+                          <option value="Transfer Bank">Transfer Bank</option>
+                          <option value="Kartu Kredit">Kartu Kredit</option>
+                          <option value="Tunai">Tunai</option>
                         </select>
                       </div>
 
@@ -473,7 +297,6 @@
                           <option>Pending</option>
                           <option>Confirmed</option>
                           <option>Cancelled</option>
-                          <option>Completed</option>
                         </select>
                       </div>
                     </div>
@@ -484,9 +307,9 @@
                 <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                   Simpan Reservasi
                 </button>
-                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="cancelModal">
+                <div class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="cancelModal">
                   Batal
-                </button>
+                </div>
               </div>
             </div>
           </div>

@@ -1,10 +1,42 @@
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
+@if(!session('email') && !session('password'))
+    <script>
+        alert("Anda belum login");
+        window.location.href = '/admin/login';
+    </script>
+@endif
+
+@php
+  //  dd($data['kamar']);
+  $totalKamar = count($data['kamar']);
+  $totalReservasi = count($data['reservasi']);
+  $totalTamu = count($data['tamu']); 
+  $i = 1;
+
+  $jumlahReservasiDibatalkan = 0;
+
+foreach ($data['reservasi'] as $reservasi) {
+    if ($reservasi['status_reservasi'] === 'cancelled') {
+        $jumlahReservasiDibatalkan++;
+    }
+}
+
+@endphp
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Garut Indah</title>
+  <title>{{ $title }} - Garut Indah</title>
   <link rel="icon" href="/src/img/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -57,10 +89,15 @@
           <i class="fas fa-users w-6"></i>
           <span class="nav-text ml-3">Pelanggan</span>
         </a>
-        <a href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-          <i class="fas fa-sign-out-alt w-6"></i>
-          <span class="nav-text ml-3">Log Out</span>
-        </a>
+        <form action="/admin/logout" method="post">
+          @csrf
+          <div href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+            <button type="submit">
+            <i class="fas fa-sign-out-alt w-6"></i>
+            <span class="nav-text ml-3">Log Out</span>
+          </button>
+          </div>
+        </form>
       </nav>
     </div>
 
@@ -71,10 +108,7 @@
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold text-gray-800">Dashboard</h1>
           <div class="flex items-center space-x-4">
-            <div class="relative">
-              <i class="fas fa-bell text-gray-600"></i>
-              <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-            </div>
+            
             <div class="flex items-center">
               <span class="ml-2 text-gray-700">Admin</span>
             </div>
@@ -93,7 +127,7 @@
               </div>
               <div class="ml-4">
                 <p class="text-sm text-gray-500">Total Kamar</p>
-                <p class="text-2xl font-bold">42</p>
+                <p class="text-2xl font-bold">{{ $totalKamar }}</p>
               </div>
             </div>
           </div>
@@ -103,8 +137,8 @@
                 <i class="fas fa-calendar-check"></i>
               </div>
               <div class="ml-4">
-                <p class="text-sm text-gray-500">Reservasi Hari Ini</p>
-                <p class="text-2xl font-bold">8</p>
+                <p class="text-sm text-gray-500">Total Reservasi</p>
+                <p class="text-2xl font-bold">{{ $totalReservasi }}</p>
               </div>
             </div>
           </div>
@@ -114,8 +148,8 @@
                 <i class="fas fa-users"></i>
               </div>
               <div class="ml-4">
-                <p class="text-sm text-gray-500">Pelanggan Baru</p>
-                <p class="text-2xl font-bold">5</p>
+                <p class="text-sm text-gray-500">Total Tamu</p>
+                <p class="text-2xl font-bold">{{ $totalTamu }}</p>
               </div>
             </div>
           </div>
@@ -126,7 +160,7 @@
               </div>
               <div class="ml-4">
                 <p class="text-sm text-gray-500">Pembatalan</p>
-                <p class="text-2xl font-bold">2</p>
+                <p class="text-2xl font-bold">{{ $jumlahReservasiDibatalkan }}</p>
               </div>
             </div>
           </div>
@@ -141,7 +175,7 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kamar</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check-In</th>
@@ -151,92 +185,65 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
+                @foreach ($data['reservasi_terbaru'] as $reservasi)
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#RESV001</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Budi Santoso</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Deluxe Room</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15 Jun 2023</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">18 Jun 2023</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $i++ }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $reservasi->tamu->nama }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservasi->kamar->tipe_kamar }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservasi->tanggal_checkin }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservasi->tanggal_checkin }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmed</span>
+                    @if ($reservasi->status_reservasi == 'cancelled')
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"> Cancelled </span>
+                    @elseif ($reservasi->status_reservasi == 'pending')
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"> Pending </span>
+                    @else
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> Confirmed </span>
+                    @endif
+                    
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
                   </td>
                 </tr>
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#RESV002</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ani Wijaya</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Superior Room</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 Jun 2023</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">19 Jun 2023</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#RESV003</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Citra Dewi</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Standard Room</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">17 Jun 2023</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20 Jun 2023</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900">Detail</a>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
         </div>
 
         <!-- Room Availability -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="p-4 border-b border-gray-200">
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <div class="p-4 border-b border-gray-200">
               <h2 class="text-lg font-semibold text-gray-800">Ketersediaan Kamar</h2>
-            </div>
-            <div class="p-4">
-              <div class="mb-4">
-                <h3 class="text-sm font-medium text-gray-500 mb-2">Standard Room</h3>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
-                </div>
-                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>15/20 tersedia</span>
-                  <span>75%</span>
-                </div>
-              </div>
-              <div class="mb-4">
-                <h3 class="text-sm font-medium text-gray-500 mb-2">Superior Room</h3>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-green-600 h-2.5 rounded-full" style="width: 50%"></div>
-                </div>
-                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>10/20 tersedia</span>
-                  <span>50%</span>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-gray-500 mb-2">Deluxe Room</h3>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-yellow-600 h-2.5 rounded-full" style="width: 25%"></div>
-                </div>
-                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>5/20 tersedia</span>
-                  <span>25%</span>
-                </div>
-              </div>
-            </div>
           </div>
+          <div class="p-4">
+              @forelse ($roomAvailability as $room)
+                  <div class="mb-4">
+                      <h3 class="text-sm font-medium text-gray-500 mb-2">{{ $room['type'] }} Room</h3>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                          {{-- Menentukan warna progress bar berdasarkan tipe kamar --}}
+                          <div class="h-2.5 rounded-full
+                              @if ($room['type'] === 'Standard') bg-blue-600
+                              @elseif ($room['type'] === 'Superior') bg-green-600
+                              @elseif ($room['type'] === 'Deluxe') bg-yellow-600
+                              @else bg-gray-500 @endif"
+                              style="width: {{ $room['percentage'] }}%">
+                          </div>
+                      </div>
+                      <div class="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{{ $room['available'] }}/{{ $room['total'] }} tersedia</span>
+                          <span>{{ $room['percentage'] }}%</span>
+                      </div>
+                  </div>
+              @empty
+                  <p class="text-gray-600">Tidak ada data ketersediaan kamar.</p>
+              @endforelse
+          </div>
+      </div>
 
           <!-- Recent Activities -->
-          <div class="bg-white rounded-lg shadow overflow-hidden">
+          {{-- <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="p-4 border-b border-gray-200">
               <h2 class="text-lg font-semibold text-gray-800">Aktivitas Terkini</h2>
             </div>
@@ -278,7 +285,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
+
+
         </div>
       </main>
     </div>

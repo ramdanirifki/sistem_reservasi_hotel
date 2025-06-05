@@ -1,3 +1,7 @@
+@php
+  $i = 1;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,7 +126,7 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NO</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telepon</th>
@@ -132,109 +136,29 @@
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <!-- Pelanggan 1 -->
+                @foreach ($tamu as $dataTamu)
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#CUST001</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $i++ }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                       <div>
-                        <div class="text-sm font-medium text-gray-900">Budi Santoso</div>
-                        <div class="text-sm text-gray-500">Member sejak Jun 2022</div>
+                        <div class="text-sm font-medium text-gray-900">{{ $dataTamu->nama }}</div>
+                        <div class="text-sm text-gray-500">{{ $dataTamu->alamat }}</div>
                       </div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">budi.santoso@example.com</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">081234567890</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $dataTamu->email }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $dataTamu->nomor_telepon }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ count($dataTamu->reservasi) }}</td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
                     <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
                     <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
                   </td>
                 </tr>
+                @endforeach
                 
-                <!-- Pelanggan 2 -->
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#CUST002</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Ani Wijaya</div>
-                        <div class="text-sm text-gray-500">Member sejak Mar 2023</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ani.wijaya@example.com</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">082345678901</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
-                
-                <!-- Pelanggan 3 -->
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#CUST003</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Citra Dewi</div>
-                        <div class="text-sm text-gray-500">Member sejak Jan 2023</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">citra.dewi@example.com</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">083456789012</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
-                
-                <!-- Pelanggan 4 -->
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#CUST004</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Dedi Kurniawan</div>
-                        <div class="text-sm text-gray-500">Member sejak Nov 2022</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">dedi.kurniawan@example.com</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">084567890123</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
-                
-                <!-- Pelanggan 5 -->
-                <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#CUST005</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div>
-                        <div class="text-sm font-medium text-gray-900">Eka Putri</div>
-                        <div class="text-sm text-gray-500">Member sejak Sep 2022</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">eka.putri@example.com</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">085678901234</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                  </td>
-                </tr>
+ 
               </tbody>
             </table>
           </div>
