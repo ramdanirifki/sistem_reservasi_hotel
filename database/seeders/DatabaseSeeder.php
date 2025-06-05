@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             KamarSeeder::class,
             ReservasiSeeder::class,
             PembayaranSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }
