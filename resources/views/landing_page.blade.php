@@ -154,7 +154,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <img src="/src/img/gallery/kamar1.png" alt="" class="w-full h-64 object-cover rounded shadow-md">
         <img src="/src/img/gallery/kamar2.jpg" alt="" class="w-full h-64 object-cover rounded shadow-md">
-        <img src="/src/img/gallery/kamar4.jpg" alt="" class="w-full h-64 object-cover rounded shadow-md">
+        <img src="/src/img/gallery/kamar4.png" alt="" class="w-full h-64 object-cover rounded shadow-md">
       </div>
     </div>
     <div class="max-w-7xl mx-auto">

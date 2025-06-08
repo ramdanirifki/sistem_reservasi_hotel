@@ -57,6 +57,10 @@
           <i class="fas fa-calendar-check w-6"></i>
           <span class="nav-text ml-3">Reservasi</span>
         </a>
+        <a href="/admin/pembayaran" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+          <i class="fas fa-credit-card w-6"></i>
+          <span class="nav-text ml-3">Pembayaran</span>
+        </a>
         <a href="/admin/pelanggan" class="flex items-center px-4 py-3 bg-[#101547] text-white">
           <i class="fas fa-users w-6"></i>
           <span class="nav-text ml-3">Pelanggan</span>

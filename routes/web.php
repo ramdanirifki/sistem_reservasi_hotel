@@ -49,4 +49,8 @@ Route::get('/admin/reservasi', [ReservasiController::class, 'index']);
 
 Route::get('/admin/pelanggan', [TamuController::class, 'index']);
 
+Route::get('/admin/pembayaran', function () {
+    return view('admin.pembayaran');
+});
+
 // end
