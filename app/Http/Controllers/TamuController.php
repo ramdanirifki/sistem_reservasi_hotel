@@ -12,8 +12,12 @@ class TamuController extends Controller
      */
     public function index()
     {
-        $tamu = Tamu::all();
-        return view('admin.pelanggan', ['tamu' => $tamu]);
+        $tamu = Tamu::paginate(10); 
+
+        // Untuk menghitung nomor urut (No) yang berkelanjutan di setiap halaman
+        // Anda bisa meneruskan variabel 'i' awal dari controller
+        $halaman = ($tamu->currentPage() - 1) * $tamu->perPage() + 1;
+        return view('admin.tamu', ['tamu' => $tamu, 'halaman' => $halaman]);
         
     }
 

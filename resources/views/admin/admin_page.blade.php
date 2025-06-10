@@ -85,14 +85,18 @@ foreach ($data['reservasi'] as $reservasi) {
           <i class="fas fa-calendar-check w-6"></i>
           <span class="nav-text ml-3">Reservasi</span>
         </a>
-        <a href="/admin/pelanggan" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+        <a href="/admin/pembayaran" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+          <i class="fas fa-credit-card w-6"></i>
+          <span class="nav-text ml-3">Pembayaran</span>
+        </a>
+        <a href="/admin/tamu" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-users w-6"></i>
-          <span class="nav-text ml-3">Pelanggan</span>
+          <span class="nav-text ml-3">Tamu</span>
         </a>
         <form action="/admin/logout" method="post">
           @csrf
-          <div href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-            <button type="submit">
+          <div>
+            <button type="submit" class="flex items-center px-4 py-3 text-white hover:bg-[#101547] w-full">
             <i class="fas fa-sign-out-alt w-6"></i>
             <span class="nav-text ml-3">Log Out</span>
           </button>

@@ -1,3 +1,10 @@
+@if(!session('email') && !session('password'))
+    <script>
+        alert("Anda belum login");
+        window.location.href = '/admin/login';
+    </script>
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,14 +73,23 @@
           <i class="fas fa-calendar-check w-6"></i>
           <span class="nav-text ml-3">Reservasi</span>
         </a>
-        <a href="/admin/pelanggan" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+        <a href="/admin/pembayaran" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+          <i class="fas fa-credit-card w-6"></i>
+          <span class="nav-text ml-3">Pembayaran</span>
+        </a>
+        <a href="/admin/tamu" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-users w-6"></i>
-          <span class="nav-text ml-3">Pelanggan</span>
+          <span class="nav-text ml-3">Tamu</span>
         </a>
-        <a href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-          <i class="fas fa-sign-out-alt w-6"></i>
-          <span class="nav-text ml-3">Log Out</span>
-        </a>
+        <form action="/admin/logout" method="post">
+          @csrf
+          <div>
+            <button type="submit" class="flex items-center px-4 py-3 text-white hover:bg-[#101547] w-full">
+            <i class="fas fa-sign-out-alt w-6"></i>
+            <span class="nav-text ml-3">Log Out</span>
+          </button>
+          </div>
+        </form>
       </nav>
     </div>
 
@@ -84,11 +100,7 @@
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold text-gray-800">Manajemen Kamar</h1>
           <div class="flex items-center space-x-4">
-            <div class="relative">
-              <i class="fas fa-bell text-gray-600"></i>
-              <span
-                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-            </div>
+          
             <div class="flex items-center">
               <span class="ml-2 text-gray-700">Admin</span>
             </div>

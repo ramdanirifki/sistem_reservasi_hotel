@@ -1,3 +1,10 @@
+@if(!session('email') && !session('password'))
+    <script>
+        alert("Anda belum login");
+        window.location.href = '/admin/login';
+    </script>
+@endif
+
 @php
   $i = 1;
 @endphp
@@ -8,7 +15,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pelanggan - Garut Indah</title>
+  <title>Tamu - Garut Indah</title>
   <link rel="icon" href="/src/img/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -57,14 +64,23 @@
           <i class="fas fa-calendar-check w-6"></i>
           <span class="nav-text ml-3">Reservasi</span>
         </a>
-        <a href="/admin/pelanggan" class="flex items-center px-4 py-3 bg-[#101547] text-white">
+        <a href="/admin/pembayaran" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+          <i class="fas fa-credit-card w-6"></i>
+          <span class="nav-text ml-3">Pembayaran</span>
+        </a>
+        <a href="/admin/tamu" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-users w-6"></i>
-          <span class="nav-text ml-3">Pelanggan</span>
+          <span class="nav-text ml-3">Tamu</span>
         </a>
-        <a href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-          <i class="fas fa-sign-out-alt w-6"></i>
-          <span class="nav-text ml-3">Log Out</span>
-        </a>
+        <form action="/admin/logout" method="post">
+          @csrf
+          <div>
+            <button type="submit" class="flex items-center px-4 py-3 text-white hover:bg-[#101547] w-full">
+            <i class="fas fa-sign-out-alt w-6"></i>
+            <span class="nav-text ml-3">Log Out</span>
+          </button>
+          </div>
+        </form>
       </nav>
     </div>
 
@@ -75,10 +91,7 @@
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold text-gray-800">Manajemen Pelanggan</h1>
           <div class="flex items-center space-x-4">
-            <div class="relative">
-              <i class="fas fa-bell text-gray-600"></i>
-              <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-            </div>
+            
             <div class="flex items-center">
               <span class="ml-2 text-gray-700">Admin</span>
             </div>
@@ -119,8 +132,8 @@
         <!-- Daftar Pelanggan -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
           <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-800">Daftar Pelanggan</h2>
-            <div class="text-sm text-gray-500">Total: 125 pelanggan</div>
+            <h2 class="text-lg font-semibold text-gray-800">Daftar Tamu</h2>
+            <div class="text-sm text-gray-500">Total : {{ $tamu->total() }} Tamu</div>
           </div>
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -172,28 +185,16 @@
               <div>
                 <p class="text-sm text-gray-700">
                   Menampilkan
-                  <span class="font-medium">1</span>
+                  <span class="font-medium">{{ $tamu->firstItem() }}</span>
                   sampai
-                  <span class="font-medium">5</span>
+                  <span class="font-medium">{{ $tamu->lastItem() }}</span>
                   dari
-                  <span class="font-medium">125</span>
-                  pelanggan
+                  <span class="font-medium">{{ $tamu->total() }}</span>
+                  hasil
                 </p>
               </div>
               <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Sebelumnya</span>
-                    <i class="fas fa-chevron-left"></i>
-                  </a>
-                  <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
-                  <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
-                  <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 3 </a>
-                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Selanjutnya</span>
-                    <i class="fas fa-chevron-right"></i>
-                  </a>
-                </nav>
+                {{ $tamu->links('pagination::tailwind') }} {{-- Menggunakan Laravel built-in pagination links --}}
               </div>
             </div>
           </div>

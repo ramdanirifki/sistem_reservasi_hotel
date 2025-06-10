@@ -47,6 +47,17 @@ Route::get('/admin/manajemen-kamar', function () {
 
 Route::get('/admin/reservasi', [ReservasiController::class, 'index']);
 
-Route::get('/admin/pelanggan', [TamuController::class, 'index']);
+
+Route::post('/admin/reservasi/tambah', [ReservasiController::class, 'store']);
+Route::post('/admin/reservasi/update', [ReservasiController::class, 'update']);
+Route::get('/admin/reservasi/get/{id}', [ReservasiController::class, 'getData']);
+
+Route::delete('/admin/reservasi/hapus/{reservasi}', [ReservasiController::class, 'destroy']);
+
+Route::get('/admin/tamu', [TamuController::class, 'index']);
+
+Route::get('/admin/pembayaran', function () {
+    return view('admin.pembayaran');
+});
 
 // end
