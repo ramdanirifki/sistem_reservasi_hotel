@@ -31,9 +31,9 @@ class AutentikasiController extends Controller
 
     public static function logout (Request $request) {
 
-    $request->session()->invalidate(); // Hapus semua session
-    $request->session()->regenerateToken(); // Cegah CSRF reuse
-
-    return redirect('/admin/login')->with('success', 'Anda berhasil logout!');
-    }
+        $request->session()->invalidate(); // Hapus semua session
+        $request->session()->regenerateToken(); // Cegah CSRF reuse
+    
+        return redirect('/admin/login')->with('success', 'Anda berhasil logout!');
+        }
 }

@@ -120,7 +120,7 @@
         </div>
 
         <!-- Filter and Search -->
-        <div class="bg-white rounded-lg shadow p-4 mb-6">
+        {{-- <div class="bg-white rounded-lg shadow p-4 mb-6">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Cari Kamar</label>
@@ -152,10 +152,10 @@
               </select>
             </div>
           </div>
-        </div>
+        </div> --}}
 
         <!-- Room List -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        {{-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <!-- Room Card 1 -->
           <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="relative">
@@ -257,7 +257,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
 
         <!-- Room Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
@@ -331,7 +331,7 @@
         </div>
 
         <!-- Pagination -->
-        <div class="flex justify-between items-center bg-white rounded-lg shadow p-4">
+        {{-- <div class="flex justify-between items-center bg-white rounded-lg shadow p-4">
           <div>
             <p class="text-sm text-gray-700">
               Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">5</span> dari <span
@@ -355,7 +355,7 @@
               Selanjutnya
             </button>
           </div>
-        </div>
+        </div> --}}
       </main>
     </div>
   </div>

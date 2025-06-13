@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('jumlah_bayar', 12, 2);
             $table->string('metode_bayar');
             $table->date('tanggal_bayar');
+            $table->string('bukti_pembayaran')->nullable(); // path file
             $table->timestamps();
         });
     }

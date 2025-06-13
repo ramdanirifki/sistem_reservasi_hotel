@@ -1,3 +1,10 @@
+@if(!session('email') && !session('password'))
+    <script>
+        alert("Anda belum login");
+        window.location.href = '/admin/login';
+    </script>
+@endif
+
 @php
   $i = 1;
 @endphp
@@ -102,7 +109,7 @@
         <!-- Filter dan Pencarian -->
         <div class="bg-white rounded-lg shadow p-4 mb-6">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div class="flex-1">
+            {{-- <div class="flex-1">
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <i class="fas fa-search text-gray-400"></i>
@@ -124,7 +131,7 @@
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <i class="fas fa-filter mr-2"></i> Filter
               </button>
-            </div>
+            </div> --}}
             <button id="tambahTamuBtn"
               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
               <i class="fas fa-plus mr-2"></i> Tambah Tamu
@@ -190,7 +197,7 @@
             </table>
           </div>
           <!-- Pagination -->
-          <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          {{-- <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
             <div class="flex-1 flex justify-between sm:hidden">
               <a href="#"
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
@@ -235,7 +242,8 @@
                 </nav>
               </div>
             </div>
-          </div>
+          </div> --}}
+
         </div>
       </main>
     </div>
