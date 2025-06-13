@@ -12,32 +12,42 @@ class TamuController extends Controller
      */
     public function index()
     {
-        $tamu = Tamu::all();
-        return view('admin.pelanggan', ['tamu' => $tamu]);
-        
+        $tamu = Tamu::withCount('reservasi')->get();
+        return view('admin.tamu', compact('tamu'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-       
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'alamat' => 'required',
-            'nomor_telepon' => 'required',
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'nomor_telepon' => 'required|string|max:20',
             'email' => 'required|email|unique:tamus,email',
         ]);
 
-        return Tamu::create($request->all());
+        try {
+            $tamu = Tamu::create($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tamu berhasil ditambahkan',
+                'data' => $tamu
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menambahkan tamu',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -51,9 +61,15 @@ class TamuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tamu $tamu)
     {
-        //
+        return response()->json([
+            'id' => $tamu->id,
+            'nama' => $tamu->nama,
+            'email' => $tamu->email,
+            'nomor_telepon' => $tamu->nomor_telepon,
+            'alamat' => $tamu->alamat
+        ]);
     }
 
     /**
@@ -61,16 +77,48 @@ class TamuController extends Controller
      */
     public function update(Request $request, Tamu $tamu)
     {
-        $tamu->update($request->all());
-        return $tamu;
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'nomor_telepon' => 'required|string|max:20',
+            'email' => 'required|email|unique:tamus,email,' . $tamu->id,
+        ]);
+
+        try {
+            $tamu->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data tamu berhasil diperbarui',
+                'data' => $tamu
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui data tamu',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tamu $tamu)
+    public function destroy($id)
     {
-        $tamu->delete();
-        return response()->json(['message' => 'Tamu deleted']);
+        try {
+            $tamu = Tamu::findOrFail($id);
+            $tamu->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data tamu berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus data tamu: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

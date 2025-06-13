@@ -36,7 +36,7 @@ foreach ($data['reservasi'] as $reservasi) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $title }} - Garut Indah</title>
+  <title>Garut Indah</title>
   <link rel="icon" href="/src/img/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -89,9 +89,9 @@ foreach ($data['reservasi'] as $reservasi) {
           <i class="fas fa-credit-card w-6"></i>
           <span class="nav-text ml-3">Pembayaran</span>
         </a>
-        <a href="/admin/pelanggan" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+        <a href="/admin/tamu" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-users w-6"></i>
-          <span class="nav-text ml-3">Pelanggan</span>
+          <span class="nav-text ml-3">Tamu</span>
         </a>
         <form action="/admin/logout" method="post">
           @csrf

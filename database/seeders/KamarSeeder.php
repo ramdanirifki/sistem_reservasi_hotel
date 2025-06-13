@@ -15,19 +15,21 @@ class KamarSeeder extends Seeder
     public function run(): void
     {  
         Kamar::insert([
-            ['nama_kamar' => 'Kamar Deluxe 301', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Superior 205', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 700000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Standard 102', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 350000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Deluxe 302', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Standard 103', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 350000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Superior 206', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 700000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Deluxe 303', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Standard 104', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 350000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Superior 207', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 700000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Deluxe 304', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Standard 105', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 350000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Superior 208', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 700000, 'status' => 'tersedia'],
-            ['nama_kamar' => 'Kamar Deluxe 305', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Deluxe 1', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 950000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Deluxe 2', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 950000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Deluxe 3', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 950000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Deluxe 4', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 950000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Deluxe 5', 'tipe_kamar' => 'Deluxe', 'harga_per_malam' => 950000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Superior 1', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 750000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Superior 2', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 750000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Superior 3', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 750000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Superior 4', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 750000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Superior 5', 'tipe_kamar' => 'Superior', 'harga_per_malam' => 750000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Standard 1', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Standard 2', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Standard 3', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Standard 4', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
+            ['nama_kamar' => 'Kamar Standard 5', 'tipe_kamar' => 'Standard', 'harga_per_malam' => 550000, 'status' => 'tersedia'],
         ]);
     }
 }

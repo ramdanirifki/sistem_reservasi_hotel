@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pembayaran - Garut Indah</title>
+  <title>Garut Indah</title>
   <link rel="icon" href="/src/img/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -68,9 +68,9 @@
           <i class="fas fa-credit-card w-6"></i>
           <span class="nav-text ml-3">Pembayaran</span>
         </a>
-        <a href="/admin/pelanggan" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
+        <a href="/admin/tamu" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-users w-6"></i>
-          <span class="nav-text ml-3">Pelanggan</span>
+          <span class="nav-text ml-3">Tamu</span>
         </a>
         <a href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
           <i class="fas fa-sign-out-alt w-6"></i>
@@ -188,9 +188,6 @@
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex space-x-2">
                       <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
                         <i class="fas fa-edit"></i>
                       </button>
                       <button class="text-red-600 hover:text-red-900">
@@ -231,9 +228,6 @@
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex space-x-2">
                       <button class="text-blue-600 hover:text-blue-900">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="text-yellow-600 hover:text-yellow-900">
                         <i class="fas fa-edit"></i>
                       </button>
                       <button class="text-red-600 hover:text-red-900">

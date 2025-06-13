@@ -12,7 +12,8 @@ class KamarController extends Controller
      */
     public function index()
     {
-        return kamar::all();
+        $kamars = Kamar::orderBy('id', 'asc')->get();
+        return view('admin.manajemen_kamar', compact('kamars'));
     }
 
     /**
@@ -21,7 +22,7 @@ class KamarController extends Controller
     public function create()
     {
         //
-        
+
     }
 
     /**
@@ -30,12 +31,31 @@ class KamarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tipe_kamar' => 'required',
-            'harga_per_malam' => 'required|numeric',
+            'nama_kamar' => 'required|string|max:255',
+            'tipe_kamar' => 'required|in:standard,superior,deluxe',
+            'harga_per_malam' => 'required|numeric|min:0',
             'status' => 'required|in:tersedia,tidak tersedia',
         ]);
-    
-        return Kamar::create($request->all());
+
+        try {
+            $kamar = Kamar::create([
+                'nama_kamar' => $request->nama_kamar,
+                'tipe_kamar' => $request->tipe_kamar,
+                'harga_per_malam' => $request->harga_per_malam,
+                'status' => $request->status,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Kamar berhasil ditambahkan',
+                'data' => $kamar
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menambahkan kamar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -66,9 +86,20 @@ class KamarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // app/Http/Controllers/KamarController.php
     public function destroy(Kamar $kamar)
     {
-        $kamar->delete();
-        return response()->json(['message' => 'Tamu deleted']);
+        try {
+            $kamar->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Kamar berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus kamar: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

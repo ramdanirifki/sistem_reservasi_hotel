@@ -17,12 +17,12 @@ class ReservasiController extends Controller
         //
         // Mendapatkan data reservasi dengan pagination
         // Angka 10 menunjukkan berapa banyak item per halaman
-        $reservasi = Reservasi::paginate(10); 
+        $reservasi = Reservasi::paginate(10);
 
         // Untuk menghitung nomor urut (No) yang berkelanjutan di setiap halaman
         // Anda bisa meneruskan variabel 'i' awal dari controller
         $halaman = ($reservasi->currentPage() - 1) * $reservasi->perPage() + 1;
-        
+
         $tamu = Tamu::all();
         $kamar = Kamar::all();
 
@@ -49,8 +49,20 @@ class ReservasiController extends Controller
             'tanggal_checkout' => 'required|date|after:tanggal_checkin',
             'status_reservasi' => 'required|in:pending,confirmed,cancelled',
         ]);
-    
-        return Reservasi::create($request->all());
+
+        try {
+            Reservasi::create([
+                'tamu_id' => $request->tamu_id,
+                'kamar_id' => $request->kamar_id,
+                'tanggal_checkin' => $request->tanggal_checkin,
+                'tanggal_checkout' => $request->tanggal_checkout,
+                'status_reservasi' => $request->status_reservasi,
+            ]);
+
+            return redirect('/admin/reservasi')->with('success', 'Reservasi berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect('/admin/reservasi')->with('error', 'Gagal menambahkan reservasi: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -83,10 +95,15 @@ class ReservasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservasi $reservasi)
+    public function destroy($id)
     {
-        //
-        $reservasi->delete();
-        return response()->json(['message' => 'Tamu deleted']);
+        try {
+            $reservasi = Reservasi::findOrFail($id);
+            $reservasi->delete();
+
+            return redirect()->back()->with('success', 'Reservasi berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus reservasi: ' . $e->getMessage());
+        }
     }
 }
