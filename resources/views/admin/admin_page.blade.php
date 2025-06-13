@@ -95,8 +95,8 @@ foreach ($data['reservasi'] as $reservasi) {
         </a>
         <form action="/admin/logout" method="post">
           @csrf
-          <div href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-            <button type="submit">
+          <div>
+            <button type="submit" class="flex items-center px-4 py-3 text-white hover:bg-[#101547] w-full">
             <i class="fas fa-sign-out-alt w-6"></i>
             <span class="nav-text ml-3">Log Out</span>
           </button>

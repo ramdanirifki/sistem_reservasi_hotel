@@ -36,7 +36,6 @@ class PembayaranController extends Controller
                 }
 
 
-                // --- BAGIAN LAIN TETAP SAMA ---
                 // Pencarian berdasarkan Nama Tamu atau Email Tamu, melalui relasi Reservasi
                 $q->orWhereHas('reservasi', function ($reservasiQuery) use ($searchTerm) {
                     $reservasiQuery->whereHas('tamu', function ($tamuQuery) use ($searchTerm) {

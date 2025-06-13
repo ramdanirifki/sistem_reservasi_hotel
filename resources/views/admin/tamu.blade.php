@@ -78,10 +78,15 @@
           <i class="fas fa-users w-6"></i>
           <span class="nav-text ml-3">Tamu</span>
         </a>
-        <a href="" class="flex items-center px-4 py-3 text-white hover:bg-[#101547]">
-          <i class="fas fa-sign-out-alt w-6"></i>
-          <span class="nav-text ml-3">Log Out</span>
-        </a>
+        <form action="/admin/logout" method="post">
+          @csrf
+          <div>
+            <button type="submit" class="flex items-center px-4 py-3 text-white hover:bg-[#101547] w-full">
+            <i class="fas fa-sign-out-alt w-6"></i>
+            <span class="nav-text ml-3">Log Out</span>
+          </button>
+          </div>
+        </form>
       </nav>
     </div>
 
